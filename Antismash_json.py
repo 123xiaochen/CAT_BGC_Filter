@@ -15,50 +15,27 @@ outpath=sys.argv[2]
 
 
 def extract_missing_files(zip_path, extract_to):
-    # 获取目标文件夹中已存在的文件
     command = f'unzip -u {zip_path} -d {extract_to}'
     subprocess.run(command, shell=True, check=True)
 
-# def my_generator(path):
-#     print(path)
-#     for subfolder in os.listdir(path):
-#         subfolder_path = os.path.join(path, subfolder)
-#         if os.path.isdir(subfolder_path):
-#             json_files = glob.glob(os.path.join(subfolder_path, '*.json'))
-#             if len(json_files) < 1:
-#                 print(subfolder_path)
-#                 zip_path = glob.glob(os.path.join(subfolder_path, '*.zip'))
-#                 print(zip_path)
-#                 if os.path.exists(zip_path[0]):
-#                     extract_missing_files(zip_path[0], subfolder_path)
-#                     json_files = glob.glob(os.path.join(subfolder_path, '*.json'))
-#             for json_file in json_files:
-#                 yield json_file
 
-# 提取缺失文件的函数
-# def extract_missing_files(zip_path, extract_to):
-#     # 使用 zipfile 解压文件
-#     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-#         zip_ref.extractall(extract_to)
 
-# 改进的 my_generator 函数
+
 def my_generator(path):
     print(f"Processing path: {path}")
     for entry in os.scandir(path):
-        if entry.is_dir():  # 仅处理目录
+        if entry.is_dir():  
             subfolder_path = entry.path
             json_files = glob.glob(os.path.join(subfolder_path, '*.json'))
 
-            if len(json_files) < 1:  # 如果没有找到 .json 文件
+            if len(json_files) < 1:
                 print(f"No JSON files in {subfolder_path}, looking for .zip files.")
                 zip_path = glob.glob(os.path.join(subfolder_path, '*.zip'))
-                if zip_path:  # 如果找到了 .zip 文件
+                if zip_path: 
                     print(f"Found zip file: {zip_path[0]}, extracting.")
                     extract_missing_files(zip_path[0], subfolder_path)
-                    # 再次检查是否提取了 .json 文件
                     json_files = glob.glob(os.path.join(subfolder_path, '*.json'))
             
-            # 返回每个 .json 文件
             for json_file in json_files:
                 yield json_file
 
@@ -71,7 +48,7 @@ for file_name in my_generator(path):
     r=0
     #name = file_name.strip(".json")
     name_dir = os.path.dirname(file_name)
-    name='10.8.5.43:8888'+name_dir+'/index.html'
+    name='127.0.0.1:8888'+name_dir+'/index.html'
     Pos_Charge=['Arg',"His","Lys","Orn","Dab","Dap"]
     try: 
         file = open(file_name, encoding = 'utf-8')
@@ -84,7 +61,6 @@ for file_name in my_generator(path):
         
         for record in records:
             record_id = record["id"]
-            #从features中提取BGC长度、domain方向信息
             features = record["features"]
             areas = record["areas"]
             modules = record['modules']
@@ -155,7 +131,6 @@ for file_name in my_generator(path):
                             end = area['protoclusters'][str(t)]['end']
                             NRP_protoclu=t
                     start_end=str(start)+'_'+str(end)
-                    #根据位置判断NRPS对应的是否为single
                     # for  candid in area['candidates']:
                     #     candid_start=candid['start']
                     #     candid_end=candid['end']
