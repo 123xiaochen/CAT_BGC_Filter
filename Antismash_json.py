@@ -109,9 +109,9 @@ for file_name in my_generator(path):
                 z=0
                 string=','
                 name1 = f"{name}#r{r}c{i}"
-                if 'NRPS' in area['products'] and len(area['products']) > 1:
-                    Product = string.join(str(item) for item in area['products'])                    
-                #if 'NRPS' in area['products']:
+                #if 'NRPS' in area['products'] and len(area['products']) > 1:
+                #    Product = string.join(str(item) for item in area['products'])                    
+                if 'NRPS' in area['products']:
                     ID=''
                     line_add = ''
                     line_sco = ''
